@@ -4,7 +4,7 @@ import br.com.nubank.authorizer.models.Account;
 import br.com.nubank.authorizer.models.Transaction;
 import br.com.nubank.authorizer.models.TransactionResult;
 
-public interface Autorizer {
+public interface Authorizer {
 
     TransactionResult authorize(Account account, Transaction transaction);
 }
