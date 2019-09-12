@@ -23,7 +23,7 @@ public class BasicAuthorizer implements Authorizer {
         return new TransactionResult(account, Collections.emptyList());
     }
 
-    public List<Transaction> getTransactionsHistory() {
+    List<Transaction> getTransactionsHistory() {
         return transactionsHistory;
     }
 }
