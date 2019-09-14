@@ -1,6 +1,7 @@
 package br.com.nubank.authorizer;
 
 import br.com.nubank.authorizer.interfaces.Authorizer;
+import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
 import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
@@ -13,8 +14,8 @@ public class BasicAuthorizer implements Authorizer {
 
     private ValidatorsChain validatorsChain;
 
-    public BasicAuthorizer(ValidatorsChain validatorsChain) {
-        this.validatorsChain = validatorsChain;
+    public BasicAuthorizer() {
+        this.validatorsChain = new BasicValidatorsChain();
     }
 
     @Override

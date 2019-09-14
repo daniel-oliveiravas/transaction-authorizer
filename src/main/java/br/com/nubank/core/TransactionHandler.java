@@ -2,7 +2,6 @@ package br.com.nubank.core;
 
 import br.com.nubank.authorizer.BasicAuthorizer;
 import br.com.nubank.authorizer.interfaces.Authorizer;
-import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
 import br.com.nubank.core.interfaces.OperationHandler;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Operation;
@@ -16,7 +15,7 @@ public class TransactionHandler implements OperationHandler {
 
     TransactionHandler(AccountHolder accountHolder) {
         this.accountHolder = accountHolder;
-        this.authorizer = new BasicAuthorizer(new BasicValidatorsChain());
+        this.authorizer = new BasicAuthorizer();
     }
 
     @Override
