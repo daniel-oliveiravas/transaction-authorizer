@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.validators.chain;
 
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,10 +27,10 @@ public class CardValidatorTest {
         Account account = TestsHelper.createAccount(100, false);
         Transaction currentTransaction = TestsHelper.createTransaction("any", LocalDateTime.now(), 100);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory("any", 1, 100);
-        Operation operation = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
+        TransactionAuthorization transactionAuthorization = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
 
         List<String> violations = new ArrayList<>();
-        cardValidator.handle(operation, violations);
+        cardValidator.handle(transactionAuthorization, violations);
 
         Assert.assertEquals(1, violations.size());
     }
@@ -40,10 +40,10 @@ public class CardValidatorTest {
         Account account = TestsHelper.createAccount(100, true);
         Transaction currentTransaction = TestsHelper.createTransaction("any", LocalDateTime.now(), 100);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory("any", 1, 100);
-        Operation operation = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
+        TransactionAuthorization transactionAuthorization = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
 
         List<String> violations = Collections.emptyList();
-        cardValidator.handle(operation, violations);
+        cardValidator.handle(transactionAuthorization, violations);
 
         Assert.assertEquals(0, violations.size());
     }

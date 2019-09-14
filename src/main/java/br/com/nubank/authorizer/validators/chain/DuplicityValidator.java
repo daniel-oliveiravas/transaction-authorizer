@@ -1,7 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,10 +15,10 @@ public class DuplicityValidator extends BaseHandler {
     private static final int MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS = 0;
 
     @Override
-    public void handle(Operation operation, List<String> violations) {
-        Transaction currentTransaction = operation.getCurrentTransaction();
+    public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
+        Transaction currentTransaction = transactionAuthorization.getCurrentTransaction();
         String currentMerchantPurchase = currentTransaction.getMerchant();
-        List<Transaction> merchantTransactions = groupTransactionByMerchant(operation.getTransactionsHistory()).get(currentMerchantPurchase);
+        List<Transaction> merchantTransactions = groupTransactionByMerchant(transactionAuthorization.getTransactionsHistory()).get(currentMerchantPurchase);
 
         if (merchantTransactions != null && merchantTransactions.size() > 0) {
             long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions, currentTransaction.getAmount());
@@ -28,7 +28,7 @@ public class DuplicityValidator extends BaseHandler {
             }
         }
 
-        super.handle(operation, violations);
+        super.handle(transactionAuthorization, violations);
     }
 
     private long getDoubledTransactionsFromLastMinutesCount(List<Transaction> transactionsHistory, Integer currentAmount) {

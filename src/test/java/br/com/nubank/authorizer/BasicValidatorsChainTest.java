@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer;
 
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
 import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import org.junit.Assert;
@@ -24,8 +24,8 @@ public class BasicValidatorsChainTest {
         Assert.assertTrue(violations.contains("insufficient-limit"));
     }
 
-    private Operation createOperationWithMultipleViolations() {
-        return new Operation(createAccountWithInactiveCard(100),
+    private TransactionAuthorization createOperationWithMultipleViolations() {
+        return new TransactionAuthorization(createAccountWithInactiveCard(100),
                 createSimpleTransaction(200),
                 Collections.emptyList());
     }

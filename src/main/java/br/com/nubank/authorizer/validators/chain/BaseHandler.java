@@ -1,6 +1,6 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.models.Operation;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ public abstract class BaseHandler implements Handler {
         this.nextHandler = handler;
     }
 
-    public void handle(Operation operation, List<String> violations) {
+    public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
         if (nextHandler != null) {
-            nextHandler.handle(operation, violations);
+            nextHandler.handle(transactionAuthorization, violations);
         }
     }
 }

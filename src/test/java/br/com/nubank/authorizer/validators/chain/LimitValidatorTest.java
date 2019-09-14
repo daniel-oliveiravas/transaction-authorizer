@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.validators.chain;
 
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +43,7 @@ public class LimitValidatorTest {
         Assert.assertEquals(0, violations.size());
     }
 
-    private Operation createOperation(Integer availableLimit, Integer operationAmount) {
+    private TransactionAuthorization createOperation(Integer availableLimit, Integer operationAmount) {
         Account account = TestsHelper.createAccount(availableLimit, true);
         Transaction transaction = TestsHelper.createTransaction("any", LocalDateTime.now(), operationAmount);
         List<Transaction> transactionHistory = TestsHelper.createTransactionHistory("any", 1, 20);

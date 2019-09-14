@@ -1,7 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,8 +14,8 @@ public class FrequencyValidator extends BaseHandler {
     private static final int CURRENT_TRANSACTION_COUNT = 1;
 
     @Override
-    public void handle(Operation operation, List<String> violations) {
-        List<Transaction> transactionsHistory = operation.getTransactionsHistory();
+    public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
+        List<Transaction> transactionsHistory = transactionAuthorization.getTransactionsHistory();
 
         LocalDateTime start = LocalDateTime.now().minusMinutes(FREQUENCY_MINUTES_RANGE);
         LocalDateTime end = LocalDateTime.now();
@@ -26,7 +26,7 @@ public class FrequencyValidator extends BaseHandler {
             violations.add(HIGH_FREQUENCY_VIOLATION);
         }
 
-        super.handle(operation, violations);
+        super.handle(transactionAuthorization, violations);
     }
 
     private long getLastTwoMinutesTransactionsCount(List<Transaction> transactionsHistory, LocalDateTime start, LocalDateTime end) {

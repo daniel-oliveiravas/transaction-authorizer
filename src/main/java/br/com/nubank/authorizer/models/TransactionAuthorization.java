@@ -2,13 +2,13 @@ package br.com.nubank.authorizer.models;
 
 import java.util.List;
 
-public class Operation {
+public class TransactionAuthorization {
 
     private Account account;
     private Transaction currentTransaction;
     private List<Transaction> transactionsHistory;
 
-    public Operation(Account account, Transaction currentTransaction, List<Transaction> transactionsHistory) {
+    public TransactionAuthorization(Account account, Transaction currentTransaction, List<Transaction> transactionsHistory) {
         this.account = account;
         this.currentTransaction = currentTransaction;
         this.transactionsHistory = transactionsHistory;

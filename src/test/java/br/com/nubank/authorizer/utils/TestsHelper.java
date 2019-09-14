@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.utils;
 
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ public class TestsHelper {
         return new Transaction(merchant, amount, LocalDateTime.from(time));
     }
 
-    public static Operation createOperation(Account account, Transaction currentTransaction, List<Transaction> transactionsHistory) {
-        return new Operation(
+    public static TransactionAuthorization createOperation(Account account, Transaction currentTransaction, List<Transaction> transactionsHistory) {
+        return new TransactionAuthorization(
                 account,
                 currentTransaction,
                 transactionsHistory);

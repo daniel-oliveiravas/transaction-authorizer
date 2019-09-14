@@ -2,8 +2,8 @@ package br.com.nubank.authorizer;
 
 import br.com.nubank.authorizer.interfaces.Authorizer;
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 import br.com.nubank.authorizer.models.TransactionResult;
 import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 
@@ -22,8 +22,8 @@ public class BasicAuthorizer implements Authorizer {
 
     @Override
     public TransactionResult authorize(Account account, Transaction transaction) {
-        Operation operation = createOperation(account, transaction);
-        List<String> violations = validatorsChain.validate(operation);
+        TransactionAuthorization transactionAuthorization = createOperation(account, transaction);
+        List<String> violations = validatorsChain.validate(transactionAuthorization);
 
         if (violations.isEmpty()) {
             getTransactionsHistory().add(transaction);
@@ -36,7 +36,7 @@ public class BasicAuthorizer implements Authorizer {
         return transactionsHistory;
     }
 
-    private Operation createOperation(Account account, Transaction currentTransaction) {
-        return new Operation(account, currentTransaction, getTransactionsHistory());
+    private TransactionAuthorization createOperation(Account account, Transaction currentTransaction) {
+        return new TransactionAuthorization(account, currentTransaction, getTransactionsHistory());
     }
 }

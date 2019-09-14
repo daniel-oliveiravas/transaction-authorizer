@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.validators.chain;
 
 import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Operation;
 import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.authorizer.models.TransactionAuthorization;
 import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class FrequencyValidatorTest {
         Assert.assertEquals(0, violations.size());
     }
 
-    private Operation createOperations(int transactionsHistorySize) {
+    private TransactionAuthorization createOperations(int transactionsHistorySize) {
         Account simpleAccount = TestsHelper.createAccount(0, true);
         Transaction currentTransaction = TestsHelper.createTransaction("any", LocalDateTime.now(), 100);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory("any", transactionsHistorySize, 200);
