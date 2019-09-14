@@ -19,12 +19,8 @@ public class BasicAuthorizer implements Authorizer {
 
     @Override
     public TransactionResult authorizeTransaction(Account account, Transaction transaction) {
-        TransactionAuthorization transactionAuthorization = createOperation(account, transaction);
+        TransactionAuthorization transactionAuthorization = new TransactionAuthorization(account, transaction);
         List<String> violations = validatorsChain.validate(transactionAuthorization);
         return new TransactionResult(account, violations);
-    }
-
-    private TransactionAuthorization createOperation(Account account, Transaction currentTransaction) {
-        return new TransactionAuthorization(account, currentTransaction);
     }
 }
