@@ -1,11 +1,11 @@
 package br.com.nubank.authorizer;
 
 import br.com.nubank.authorizer.interfaces.Authorizer;
+import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
 import br.com.nubank.models.TransactionAuthorization;
 import br.com.nubank.models.TransactionResult;
-import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class BasicAuthorizer implements Authorizer {
     private List<Transaction> transactionsHistory;
     private ValidatorsChain validatorsChain;
 
-    BasicAuthorizer(ValidatorsChain validatorsChain) {
+    public BasicAuthorizer(ValidatorsChain validatorsChain) {
         this.transactionsHistory = new ArrayList<>();
         this.validatorsChain = validatorsChain;
     }
