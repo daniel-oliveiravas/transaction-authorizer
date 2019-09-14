@@ -1,4 +1,4 @@
-package br.com.nubank.authorizer.models;
+package br.com.nubank.models;
 
 public class Account {
 

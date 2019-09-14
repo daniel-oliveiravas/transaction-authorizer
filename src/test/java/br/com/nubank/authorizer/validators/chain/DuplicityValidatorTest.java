@@ -1,7 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Transaction;
+import br.com.nubank.models.Account;
+import br.com.nubank.models.Transaction;
 import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;

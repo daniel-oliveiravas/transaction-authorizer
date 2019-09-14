@@ -1,7 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.models.Transaction;
-import br.com.nubank.authorizer.models.TransactionAuthorization;
+import br.com.nubank.models.Transaction;
+import br.com.nubank.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.List;

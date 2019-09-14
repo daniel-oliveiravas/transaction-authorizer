@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.interfaces;
 
-import br.com.nubank.authorizer.models.Account;
-import br.com.nubank.authorizer.models.Transaction;
-import br.com.nubank.authorizer.models.TransactionResult;
+import br.com.nubank.models.Account;
+import br.com.nubank.models.Transaction;
+import br.com.nubank.models.TransactionResult;
 
 public interface Authorizer {
 
