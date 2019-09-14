@@ -1,8 +1,10 @@
 package br.com.nubank.models;
 
+import br.com.nubank.enums.OperationType;
+
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class Transaction extends Operation {
 
     private String merchant;
     private Integer amount;
@@ -24,5 +26,10 @@ public class Transaction {
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+    @Override
+    public OperationType getOperationType() {
+        return OperationType.TRANSACTION;
     }
 }

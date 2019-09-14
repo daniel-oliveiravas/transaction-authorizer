@@ -1,5 +1,6 @@
 package br.com.nubank.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionResult {
@@ -12,11 +13,20 @@ public class TransactionResult {
         this.violations = violations;
     }
 
+    public TransactionResult(Account account) {
+        this.account = account;
+        this.violations = new ArrayList<>();
+    }
+
     public List<String> getViolations() {
         return violations;
     }
 
     public Account getAccount() {
         return account;
+    }
+
+    public void addViolation(String violation) {
+        violations.add(violation);
     }
 }
