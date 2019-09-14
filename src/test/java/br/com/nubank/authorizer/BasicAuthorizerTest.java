@@ -30,7 +30,7 @@ public class BasicAuthorizerTest {
     @Test
     public void shouldAddTransactionToHistoryAfterAuthorizeWithoutViolations() {
         when(validatorsChain.validate(any())).thenReturn(Collections.emptyList());
-        TransactionResult transactionResult = basicAuthorizer.authorize(createAccountWithActiveCard(), createSimpleTransaction());
+        TransactionResult transactionResult = basicAuthorizer.authorizeTransaction(createAccountWithActiveCard(), createSimpleTransaction());
 
         Mockito.verify(validatorsChain, Mockito.times(1)).validate(any());
         Assert.assertEquals(basicAuthorizer.getTransactionsHistory().size(), 1);
@@ -41,7 +41,7 @@ public class BasicAuthorizerTest {
     public void shouldNotAddTransactionToHistoryAfterAuthorizeWithViolations() {
         String violationName = "card-not-active";
         when(validatorsChain.validate(any())).thenReturn(Collections.singletonList(violationName));
-        TransactionResult transactionResult = basicAuthorizer.authorize(createAccountWithActiveCard(), createSimpleTransaction());
+        TransactionResult transactionResult = basicAuthorizer.authorizeTransaction(createAccountWithActiveCard(), createSimpleTransaction());
 
         Mockito.verify(validatorsChain, Mockito.times(1)).validate(any());
         Assert.assertEquals(basicAuthorizer.getTransactionsHistory().size(), 0);

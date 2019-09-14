@@ -6,5 +6,5 @@ import br.com.nubank.models.TransactionResult;
 
 public interface Authorizer {
 
-    TransactionResult authorize(Account account, Transaction transaction);
+    TransactionResult authorizeTransaction(Account account, Transaction transaction);
 }
