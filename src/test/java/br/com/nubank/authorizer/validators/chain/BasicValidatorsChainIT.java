@@ -1,7 +1,5 @@
-package br.com.nubank.authorizer;
+package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
-import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
 import br.com.nubank.models.TransactionAuthorization;
@@ -11,7 +9,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class BasicValidatorsChainTest {
+public class BasicValidatorsChainIT {
 
     @Test
     public void shouldValidateOperationSuccessfully() {
