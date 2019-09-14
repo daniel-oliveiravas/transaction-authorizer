@@ -11,7 +11,13 @@ public class BasicValidatorsChain implements ValidatorsChain {
 
     public BasicValidatorsChain() {
         initialHandler = new CardValidator();
-        initialHandler.setNext(new LimitValidator());
+        LimitValidator limitValidator = new LimitValidator();
+        DuplicityValidator duplicityValidator = new DuplicityValidator();
+        FrequencyValidator frequencyValidator = new FrequencyValidator();
+
+        initialHandler.setNext(limitValidator);
+        limitValidator.setNext(duplicityValidator);
+        duplicityValidator.setNext(frequencyValidator);
     }
 
     @Override
