@@ -1,8 +1,8 @@
 package br.com.nubank.authorizer.validators.chain;
 
+import br.com.nubank.authorizer.utils.TestsHelper;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
-import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +29,9 @@ public class DuplicityValidatorTest {
 
         Transaction currentTransaction = TestsHelper.createTransaction(merchant, LocalDateTime.now(), amount);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory(merchant, 1, amount);
-        Account simpleAccount = TestsHelper.createAccount(0, true);
+        Account simpleAccount = TestsHelper.createAccount(0, true, transactionsHistory);
 
-        duplicityValidator.handle(TestsHelper.createOperation(simpleAccount, currentTransaction, transactionsHistory), violations);
+        duplicityValidator.handle(TestsHelper.createTransactionAuthorization(simpleAccount, currentTransaction), violations);
         Assert.assertEquals(1, violations.size());
     }
 
@@ -45,9 +45,9 @@ public class DuplicityValidatorTest {
 
         Transaction currentTransaction = TestsHelper.createTransaction(merchant, now, amount);
         List<Transaction> transactionsHistory = createValidTransactionsHistory(merchant, amount, now);
-        Account simpleAccount = TestsHelper.createAccount(0, true);
+        Account simpleAccount = TestsHelper.createAccount(0, true, transactionsHistory);
 
-        duplicityValidator.handle(TestsHelper.createOperation(simpleAccount, currentTransaction, transactionsHistory), violations);
+        duplicityValidator.handle(TestsHelper.createTransactionAuthorization(simpleAccount, currentTransaction), violations);
         Assert.assertEquals(0, violations.size());
     }
 
@@ -61,9 +61,9 @@ public class DuplicityValidatorTest {
 
         Transaction transactionWithDifferentAmount = TestsHelper.createTransaction(merchant, LocalDateTime.now().plusMinutes(differenceInMinutes), secondAmount);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory(merchant, 1, amount);
-        Account simpleAccount = TestsHelper.createAccount(0, true);
+        Account simpleAccount = TestsHelper.createAccount(0, true, transactionsHistory);
 
-        duplicityValidator.handle(TestsHelper.createOperation(simpleAccount, transactionWithDifferentAmount, transactionsHistory), violations);
+        duplicityValidator.handle(TestsHelper.createTransactionAuthorization(simpleAccount, transactionWithDifferentAmount), violations);
         Assert.assertEquals(0, violations.size());
     }
 
@@ -78,9 +78,9 @@ public class DuplicityValidatorTest {
 
         Transaction transactionWithDifferentAmount = TestsHelper.createTransaction(merchant, now, amount);
         List<Transaction> transactionsHistory = createTransactionsFromDifferentMerchant(merchant, secondMerchant, amount);
-        Account simpleAccount = TestsHelper.createAccount(0, true);
+        Account simpleAccount = TestsHelper.createAccount(0, true, transactionsHistory);
 
-        duplicityValidator.handle(TestsHelper.createOperation(simpleAccount, transactionWithDifferentAmount, transactionsHistory), violations);
+        duplicityValidator.handle(TestsHelper.createTransactionAuthorization(simpleAccount, transactionWithDifferentAmount), violations);
         Assert.assertEquals(0, violations.size());
     }
 

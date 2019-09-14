@@ -1,15 +1,14 @@
 package br.com.nubank.authorizer;
 
+import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
+import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
 import br.com.nubank.models.TransactionAuthorization;
-import br.com.nubank.authorizer.validators.chain.BasicValidatorsChain;
-import br.com.nubank.authorizer.validators.chain.ValidatorsChain;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public class BasicValidatorsChainTest {
@@ -26,8 +25,7 @@ public class BasicValidatorsChainTest {
 
     private TransactionAuthorization createOperationWithMultipleViolations() {
         return new TransactionAuthorization(createAccountWithInactiveCard(100),
-                createSimpleTransaction(200),
-                Collections.emptyList());
+                createSimpleTransaction(200));
     }
 
     private Account createAccountWithInactiveCard(Integer availableLimit) {

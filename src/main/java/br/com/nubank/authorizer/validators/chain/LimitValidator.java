@@ -10,7 +10,7 @@ public class LimitValidator extends BaseHandler {
 
     @Override
     public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
-        if (transactionAuthorization.getAccount().getAvailableLimit() < transactionAuthorization.getCurrentTransaction().getAmount()) {
+        if (transactionAuthorization.getAccount().getAvailableLimit() < transactionAuthorization.getTransaction().getAmount()) {
             violations.add(INSUFFICIENT_LIMIT_VIOLATION);
         }
         super.handle(transactionAuthorization, violations);

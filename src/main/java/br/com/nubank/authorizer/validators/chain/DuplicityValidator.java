@@ -16,9 +16,9 @@ public class DuplicityValidator extends BaseHandler {
 
     @Override
     public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
-        Transaction currentTransaction = transactionAuthorization.getCurrentTransaction();
+        Transaction currentTransaction = transactionAuthorization.getTransaction();
         String currentMerchantPurchase = currentTransaction.getMerchant();
-        List<Transaction> merchantTransactions = groupTransactionByMerchant(transactionAuthorization.getTransactionsHistory()).get(currentMerchantPurchase);
+        List<Transaction> merchantTransactions = groupTransactionByMerchant(transactionAuthorization.getAccount().getHistory()).get(currentMerchantPurchase);
 
         if (merchantTransactions != null && merchantTransactions.size() > 0) {
             long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions, currentTransaction.getAmount());

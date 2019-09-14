@@ -6,6 +6,7 @@ import br.com.nubank.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TestsHelper {
@@ -14,15 +15,20 @@ public class TestsHelper {
         return new Transaction(merchant, amount, LocalDateTime.from(time));
     }
 
-    public static TransactionAuthorization createOperation(Account account, Transaction currentTransaction, List<Transaction> transactionsHistory) {
-        return new TransactionAuthorization(
-                account,
-                currentTransaction,
-                transactionsHistory);
+    public static TransactionAuthorization createTransactionAuthorization(Account account, Transaction currentTransaction) {
+        return new TransactionAuthorization(account, currentTransaction);
+    }
+
+    public static Account createAccount(Integer availableLimit, Boolean activeCard, List<Transaction> history) {
+        Account account = new Account(availableLimit, activeCard);
+        for (Transaction transaction : history) {
+            account.addTransaction(transaction);
+        }
+        return account;
     }
 
     public static Account createAccount(Integer availableLimit, Boolean activeCard) {
-        return new Account(availableLimit, activeCard);
+        return createAccount(availableLimit, activeCard, Collections.emptyList());
     }
 
     public static List<Transaction> createTransactionHistory(String merchant, int transactionsQuantity, Integer amount) {

@@ -25,6 +25,7 @@ public class TransactionHandler implements OperationHandler {
         Account account = this.accountHolder.getAccount();
         TransactionResult transactionResult = authorizer.authorizeTransaction(account, transaction);
         if(transactionResult.getViolations().isEmpty()) {
+            account.addTransaction(transaction);
             subtractAmountFromAccountLimit(account, transaction);
         }
         return transactionResult;

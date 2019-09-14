@@ -15,7 +15,7 @@ public class FrequencyValidator extends BaseHandler {
 
     @Override
     public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
-        List<Transaction> transactionsHistory = transactionAuthorization.getTransactionsHistory();
+        List<Transaction> transactionsHistory = transactionAuthorization.getAccount().getHistory();
 
         LocalDateTime start = LocalDateTime.now().minusMinutes(FREQUENCY_MINUTES_RANGE);
         LocalDateTime end = LocalDateTime.now();

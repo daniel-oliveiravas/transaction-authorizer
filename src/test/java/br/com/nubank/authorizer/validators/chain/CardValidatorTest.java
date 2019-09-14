@@ -1,9 +1,9 @@
 package br.com.nubank.authorizer.validators.chain;
 
+import br.com.nubank.authorizer.utils.TestsHelper;
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
 import br.com.nubank.models.TransactionAuthorization;
-import br.com.nubank.authorizer.utils.TestsHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class CardValidatorTest {
         Account account = TestsHelper.createAccount(100, false);
         Transaction currentTransaction = TestsHelper.createTransaction("any", LocalDateTime.now(), 100);
         List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory("any", 1, 100);
-        TransactionAuthorization transactionAuthorization = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
+        TransactionAuthorization transactionAuthorization = TestsHelper.createTransactionAuthorization(account, currentTransaction);
 
         List<String> violations = new ArrayList<>();
         cardValidator.handle(transactionAuthorization, violations);
@@ -39,8 +39,7 @@ public class CardValidatorTest {
     public void shouldNotHaveViolationWithActiveCard() {
         Account account = TestsHelper.createAccount(100, true);
         Transaction currentTransaction = TestsHelper.createTransaction("any", LocalDateTime.now(), 100);
-        List<Transaction> transactionsHistory = TestsHelper.createTransactionHistory("any", 1, 100);
-        TransactionAuthorization transactionAuthorization = TestsHelper.createOperation(account, currentTransaction, transactionsHistory);
+        TransactionAuthorization transactionAuthorization = TestsHelper.createTransactionAuthorization(account, currentTransaction);
 
         List<String> violations = Collections.emptyList();
         cardValidator.handle(transactionAuthorization, violations);
