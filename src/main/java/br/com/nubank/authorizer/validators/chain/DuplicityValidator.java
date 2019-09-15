@@ -42,7 +42,7 @@ public class DuplicityValidator extends BaseHandler {
     }
 
     private boolean hasHappenedInLastTwoMinutes(LocalDateTime time) {
-        LocalDateTime twoMinutesAgo = LocalDateTime.now().minusMinutes(FREQUENCY_MINUTES_RANGE);
+        LocalDateTime twoMinutesAgo = LocalDateTime.from(time).minusMinutes(FREQUENCY_MINUTES_RANGE);
         return time.isAfter(twoMinutesAgo);
     }
 }
