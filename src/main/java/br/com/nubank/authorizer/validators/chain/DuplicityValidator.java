@@ -21,7 +21,7 @@ public class DuplicityValidator extends BaseHandler {
         List<Transaction> merchantTransactions = groupTransactionByMerchant(transactionAuthorization.getAccount().getHistory()).get(currentMerchantPurchase);
 
         if (merchantTransactions != null && merchantTransactions.size() > 0) {
-            long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions, currentTransaction.getAmount());
+            long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions, currentTransaction.getAmount(), currentTransaction.getTime());
 
             if (doubledTransactionsCount > MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS) {
                 violations.add(DUPLICITY_VIOLATION);
@@ -31,9 +31,9 @@ public class DuplicityValidator extends BaseHandler {
         super.handle(transactionAuthorization, violations);
     }
 
-    private long getDoubledTransactionsFromLastMinutesCount(List<Transaction> transactionsHistory, Integer currentAmount) {
+    private long getDoubledTransactionsFromLastMinutesCount(List<Transaction> transactionsHistory, Integer currentAmount, LocalDateTime currentTransactionTime) {
         return transactionsHistory.stream()
-                .filter(transaction -> transaction.getAmount().equals(currentAmount) && hasHappenedInLastTwoMinutes(transaction.getTime()))
+                .filter(transaction -> transaction.getAmount().equals(currentAmount) && hasHappenedInLastTwoMinutes(currentTransactionTime, transaction.getTime()))
                 .count();
     }
 
@@ -41,8 +41,8 @@ public class DuplicityValidator extends BaseHandler {
         return transactionsHistory.stream().collect(Collectors.groupingBy(Transaction::getMerchant));
     }
 
-    private boolean hasHappenedInLastTwoMinutes(LocalDateTime time) {
-        LocalDateTime twoMinutesAgo = LocalDateTime.from(time).minusMinutes(FREQUENCY_MINUTES_RANGE);
-        return time.isAfter(twoMinutesAgo);
+    private boolean hasHappenedInLastTwoMinutes(LocalDateTime currentTransactionTime, LocalDateTime pastTransactionTime) {
+        LocalDateTime twoMinutesAgo = LocalDateTime.from(currentTransactionTime).minusMinutes(FREQUENCY_MINUTES_RANGE);
+        return pastTransactionTime.isAfter(twoMinutesAgo);
     }
 }
