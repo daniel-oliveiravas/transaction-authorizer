@@ -1,15 +1,23 @@
 package br.com.nubank.models;
 
 import br.com.nubank.enums.OperationType;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Account extends Operation {
 
+    @Expose
     private Integer availableLimit;
+
+    @Expose
     private Boolean activeCard;
     private List<Transaction> history;
+
+    public Account() {
+        this.history = new ArrayList<>();
+    }
 
     public Account(Integer availableLimit, Boolean activeCard) {
         this.availableLimit = availableLimit;
