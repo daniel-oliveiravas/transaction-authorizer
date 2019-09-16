@@ -12,13 +12,13 @@ public class BasicOperationProcessor implements OperationProcessor {
 
     private Output output;
     private AccountCreationHandler accountCreationHandler;
-    private OperationHandler basicOperationHandler;
+    private OperationHandler transactionHandler;
 
     public BasicOperationProcessor() {
         this.output = new StdoutOutput();
         AccountHolder accountHolder = new AccountHolder();
         this.accountCreationHandler = new AccountCreationHandler(accountHolder);
-        this.basicOperationHandler = new TransactionHandler(accountHolder);
+        this.transactionHandler = new TransactionHandler(accountHolder);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BasicOperationProcessor implements OperationProcessor {
             case ACCOUNT_CREATION:
                 return accountCreationHandler.handleOperation(operation);
             case TRANSACTION:
-                return this.basicOperationHandler.handleOperation(operation);
+                return this.transactionHandler.handleOperation(operation);
             default:
                 throw new InvalidOperationTypeException();
         }
