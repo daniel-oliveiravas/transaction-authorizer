@@ -1,6 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.models.TransactionAuthorization;
+import br.com.nubank.models.Account;
+import br.com.nubank.models.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,9 @@ public class BasicValidatorsChain implements ValidatorsChain {
     }
 
     @Override
-    public List<String> validate(TransactionAuthorization transactionAuthorization) {
+    public List<String> validate(Account account, Transaction transaction, List<Transaction> history) {
         List<String> violations = new ArrayList<>();
-        initialHandler.handle(transactionAuthorization, violations);
+        initialHandler.handle(account, transaction, history, violations);
         return violations;
     }
 }

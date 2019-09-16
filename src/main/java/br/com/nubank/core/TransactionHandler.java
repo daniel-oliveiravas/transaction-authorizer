@@ -9,16 +9,20 @@ import br.com.nubank.models.Operation;
 import br.com.nubank.models.Transaction;
 import br.com.nubank.models.TransactionResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TransactionHandler implements OperationHandler {
 
     private Authorizer authorizer;
     private AccountHolder accountHolder;
+    private List<Transaction> transactionHistory;
 
     TransactionHandler(AccountHolder accountHolder) {
         this.accountHolder = accountHolder;
         this.authorizer = new BasicAuthorizer();
+        this.transactionHistory = new ArrayList<>();
     }
 
     @Override
@@ -28,9 +32,9 @@ public class TransactionHandler implements OperationHandler {
         if (Objects.isNull(account)) {
             throw new AccountNotInitializedException();
         }
-        TransactionResult transactionResult = authorizer.authorizeTransaction(account, transaction);
+        TransactionResult transactionResult = authorizer.authorizeTransaction(account, transaction, transactionHistory);
         if(transactionResult.getViolations().isEmpty()) {
-            account.addTransaction(transaction);
+            transactionHistory.add(transaction);
             subtractAmountFromAccountLimit(account, transaction);
         }
         return transactionResult;

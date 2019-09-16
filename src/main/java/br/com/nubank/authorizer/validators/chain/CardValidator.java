@@ -1,6 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
-import br.com.nubank.models.TransactionAuthorization;
+import br.com.nubank.models.Account;
+import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
@@ -9,11 +10,11 @@ public class CardValidator extends BaseHandler {
     private static final String CARD_VIOLATION = "card-not-active";
 
     @Override
-    public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
-        if (transactionAuthorization.getAccount().getActiveCard().equals(Boolean.FALSE)) {
+    public void handle(Account account, Transaction transaction, List<Transaction> history, List<String> violations) {
+        if (account.getActiveCard().equals(Boolean.FALSE)) {
             violations.add(CARD_VIOLATION);
         }
 
-        super.handle(transactionAuthorization, violations);
+        super.handle(account, transaction, history, violations);
     }
 }

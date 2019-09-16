@@ -1,7 +1,7 @@
 package br.com.nubank.authorizer.validators.chain;
 
+import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
-import br.com.nubank.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,25 +15,28 @@ public class DuplicityValidator extends BaseHandler {
     private static final int MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS = 0;
 
     @Override
-    public void handle(TransactionAuthorization transactionAuthorization, List<String> violations) {
-        Transaction currentTransaction = transactionAuthorization.getTransaction();
-        String currentMerchantPurchase = currentTransaction.getMerchant();
-        List<Transaction> merchantTransactions = groupTransactionByMerchant(transactionAuthorization.getAccount().getHistory()).get(currentMerchantPurchase);
+    public void handle(Account account, Transaction transaction, List<Transaction> history, List<String> violations) {
+        String currentMerchantPurchase = transaction.getMerchant();
+        List<Transaction> merchantTransactions = groupTransactionByMerchant(history).get(currentMerchantPurchase);
 
         if (merchantTransactions != null && merchantTransactions.size() > 0) {
-            long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions, currentTransaction.getAmount(), currentTransaction.getTime());
+            long doubledTransactionsCount = getDoubledTransactionsFromLastMinutesCount(merchantTransactions,
+                    transaction.getAmount(), transaction.getTime());
 
             if (doubledTransactionsCount > MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS) {
                 violations.add(DUPLICITY_VIOLATION);
             }
         }
 
-        super.handle(transactionAuthorization, violations);
+        super.handle(account, transaction, history, violations);
     }
 
-    private long getDoubledTransactionsFromLastMinutesCount(List<Transaction> transactionsHistory, Integer currentAmount, LocalDateTime currentTransactionTime) {
+    private long getDoubledTransactionsFromLastMinutesCount(List<Transaction> transactionsHistory,
+                                                            Integer currentAmount,
+                                                            LocalDateTime currentTransactionTime) {
         return transactionsHistory.stream()
-                .filter(transaction -> transaction.getAmount().equals(currentAmount) && hasHappenedInLastTwoMinutes(currentTransactionTime, transaction.getTime()))
+                .filter(transaction -> transaction.getAmount().equals(currentAmount) &&
+                        hasHappenedInLastTwoMinutes(currentTransactionTime, transaction.getTime()))
                 .count();
     }
 
@@ -41,7 +44,8 @@ public class DuplicityValidator extends BaseHandler {
         return transactionsHistory.stream().collect(Collectors.groupingBy(Transaction::getMerchant));
     }
 
-    private boolean hasHappenedInLastTwoMinutes(LocalDateTime currentTransactionTime, LocalDateTime pastTransactionTime) {
+    private boolean hasHappenedInLastTwoMinutes(LocalDateTime currentTransactionTime,
+                                                LocalDateTime pastTransactionTime) {
         LocalDateTime twoMinutesAgo = LocalDateTime.from(currentTransactionTime).minusMinutes(FREQUENCY_MINUTES_RANGE);
         return pastTransactionTime.isAfter(twoMinutesAgo);
     }

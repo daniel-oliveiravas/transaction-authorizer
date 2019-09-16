@@ -26,11 +26,13 @@ public class BasicAuthorizerTest {
 
     @Test
     public void authorizeTransactionSuccessfully() {
-        when(validatorsChain.validate(any())).thenReturn(Collections.emptyList());
+        when(validatorsChain.validate(any(), any(), any())).thenReturn(Collections.emptyList());
         Account account = TestsHelper.createAccount(100, false);
 
-        basicAuthorizer.authorizeTransaction(account, TestsHelper.createTransaction("any", LocalDateTime.now(), 100));
+        basicAuthorizer.authorizeTransaction(account,
+                TestsHelper.createTransaction("any", LocalDateTime.now(), 100),
+                Collections.emptyList());
 
-        verify(validatorsChain, times(1)).validate(any());
+        verify(validatorsChain, times(1)).validate(any(), any(), any());
     }
 }

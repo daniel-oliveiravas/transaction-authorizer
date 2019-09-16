@@ -2,11 +2,9 @@ package br.com.nubank.authorizer.utils;
 
 import br.com.nubank.models.Account;
 import br.com.nubank.models.Transaction;
-import br.com.nubank.models.TransactionAuthorization;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class TestsHelper {
@@ -15,20 +13,8 @@ public class TestsHelper {
         return new Transaction(merchant, amount, LocalDateTime.from(time));
     }
 
-    public static TransactionAuthorization createTransactionAuthorization(Account account, Transaction currentTransaction) {
-        return new TransactionAuthorization(account, currentTransaction);
-    }
-
-    public static Account createAccount(Integer availableLimit, Boolean activeCard, List<Transaction> history) {
-        Account account = new Account(availableLimit, activeCard);
-        for (Transaction transaction : history) {
-            account.addTransaction(transaction);
-        }
-        return account;
-    }
-
     public static Account createAccount(Integer availableLimit, Boolean activeCard) {
-        return createAccount(availableLimit, activeCard, Collections.emptyList());
+        return new Account(availableLimit, activeCard);
     }
 
     public static List<Transaction> createTransactionHistory(String merchant, int transactionsQuantity, Integer amount) {
