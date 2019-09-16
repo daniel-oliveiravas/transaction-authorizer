@@ -30,7 +30,7 @@ public class BasicOperationProcessor implements OperationProcessor {
     private TransactionResult processOperationByType(Operation operation) throws InvalidOperationTypeException {
         switch (operation.getOperationType()) {
             case ACCOUNT_CREATION:
-                return accountCreationHandler.handleOperation(operation);
+                return this.accountCreationHandler.handleOperation(operation);
             case TRANSACTION:
                 return this.transactionHandler.handleOperation(operation);
             default:

@@ -1,5 +1,6 @@
 package br.com.nubank.core;
 
+import br.com.nubank.core.exceptions.AccountNotInitializedException;
 import br.com.nubank.core.exceptions.InvalidOperationTypeException;
 import br.com.nubank.models.Operation;
 import br.com.nubank.serialization.LocalDateTimeAdapter;
@@ -117,6 +118,14 @@ public class BasicOperationProcessorIT {
 
         Assert.assertEquals("{\"account\":{\"availableLimit\":20,\"activeCard\":true},\"violations\":[]}\n" +
                 "{\"account\":{\"availableLimit\":20,\"activeCard\":true},\"violations\":[\"insufficient-limit\"]}\n", outContent.toString());
+    }
+
+    @Test(expected = AccountNotInitializedException.class)
+    public void shouldThrowExceptionWhenExecutingOperationWithoutAccount() throws InvalidOperationTypeException {
+        List<Operation> operations = readOperationsFromFile("without-account");
+        for (Operation operation : operations) {
+            basicOperationProcessor.process(operation);
+        }
     }
 
     private List<Operation> readOperationsFromFile(String filepath) {
