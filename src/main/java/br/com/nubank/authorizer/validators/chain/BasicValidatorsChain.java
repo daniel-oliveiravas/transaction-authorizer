@@ -8,15 +8,15 @@ import java.util.List;
 
 public class BasicValidatorsChain implements ValidatorsChain {
 
-    private Handler initialHandler;
+    private Validator initialValidator;
 
     public BasicValidatorsChain() {
-        initialHandler = new CardValidator();
+        initialValidator = new CardValidator();
         LimitValidator limitValidator = new LimitValidator();
         DuplicityValidator duplicityValidator = new DuplicityValidator();
         FrequencyValidator frequencyValidator = new FrequencyValidator();
 
-        initialHandler.setNext(limitValidator);
+        initialValidator.setNext(limitValidator);
         limitValidator.setNext(duplicityValidator);
         duplicityValidator.setNext(frequencyValidator);
     }
@@ -24,7 +24,7 @@ public class BasicValidatorsChain implements ValidatorsChain {
     @Override
     public List<String> validate(Account account, Transaction transaction, List<Transaction> history) {
         List<String> violations = new ArrayList<>();
-        initialHandler.handle(account, transaction, history, violations);
+        initialValidator.handle(account, transaction, history, violations);
         return violations;
     }
 }

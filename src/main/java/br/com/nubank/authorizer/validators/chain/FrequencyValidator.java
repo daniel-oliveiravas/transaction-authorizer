@@ -6,7 +6,7 @@ import br.com.nubank.models.Transaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class FrequencyValidator extends BaseHandler {
+public class FrequencyValidator extends BaseValidator {
 
     private static final String HIGH_FREQUENCY_VIOLATION = "high-frequency-small-interval";
     private static final int FREQUENCY_MINUTES_RANGE = 2;

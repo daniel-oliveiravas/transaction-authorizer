@@ -5,7 +5,7 @@ import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
-public class LimitValidator extends BaseHandler {
+public class LimitValidator extends BaseValidator {
 
     private static final String INSUFFICIENT_LIMIT_VIOLATION = "insufficient-limit";
 

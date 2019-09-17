@@ -5,9 +5,9 @@ import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
-interface Handler {
+interface Validator {
 
-    void setNext(Handler handler);
+    void setNext(Validator validator);
 
     void handle(Account account, Transaction transaction, List<Transaction> history, List<String> violations);
 }

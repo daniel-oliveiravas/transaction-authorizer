@@ -5,7 +5,7 @@ import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
-public class CardValidator extends BaseHandler {
+public class CardValidator extends BaseValidator {
 
     private static final String CARD_VIOLATION = "card-not-active";
 

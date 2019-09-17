@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DuplicityValidator extends BaseHandler {
+public class DuplicityValidator extends BaseValidator {
 
     private static final String DUPLICITY_VIOLATION = "doubled-transaction";
     private static final long FREQUENCY_MINUTES_RANGE = 2;
