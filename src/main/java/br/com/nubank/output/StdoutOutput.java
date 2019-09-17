@@ -1,5 +1,6 @@
 package br.com.nubank.output;
 
+import br.com.nubank.core.Output;
 import br.com.nubank.models.TransactionResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

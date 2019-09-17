@@ -1,4 +1,4 @@
-package br.com.nubank.output;
+package br.com.nubank.core;
 
 import br.com.nubank.models.TransactionResult;
 

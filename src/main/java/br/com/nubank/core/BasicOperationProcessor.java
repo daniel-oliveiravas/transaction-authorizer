@@ -5,7 +5,6 @@ import br.com.nubank.core.interfaces.OperationHandler;
 import br.com.nubank.core.interfaces.OperationProcessor;
 import br.com.nubank.models.Operation;
 import br.com.nubank.models.TransactionResult;
-import br.com.nubank.output.Output;
 import br.com.nubank.output.StdoutOutput;
 
 public class BasicOperationProcessor implements OperationProcessor {
