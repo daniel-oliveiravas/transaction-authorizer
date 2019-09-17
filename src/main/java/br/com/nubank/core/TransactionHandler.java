@@ -32,15 +32,15 @@ public class TransactionHandler implements OperationHandler {
         if (Objects.isNull(account)) {
             throw new AccountNotInitializedException();
         }
-        TransactionResult transactionResult = authorizer.authorizeTransaction(account, transaction, transactionHistory);
-        if(transactionResult.getViolations().isEmpty()) {
+        List<String> violations = authorizer.authorizeTransaction(account, transaction, transactionHistory);
+        if (Objects.nonNull(violations) && violations.isEmpty()) {
             transactionHistory.add(transaction);
-            subtractAmountFromAccountLimit(account, transaction);
+            accountHolder.setNewAvailableLimit(calculateNewAvailableLimit(account, transaction));
         }
-        return transactionResult;
+        return new TransactionResult(accountHolder.getAccount(), violations);
     }
 
-    private void subtractAmountFromAccountLimit(Account account, Transaction transaction) {
-        account.setAvailableLimit(account.getAvailableLimit() - transaction.getAmount());
+    private int calculateNewAvailableLimit(Account account, Transaction transaction) {
+        return account.getAvailableLimit() - transaction.getAmount();
     }
 }

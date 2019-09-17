@@ -13,4 +13,8 @@ public class AccountHolder {
     public Account getAccount() {
         return account;
     }
+
+    public void setNewAvailableLimit(Integer newAvailableLimit) {
+        this.account = new Account(newAvailableLimit, this.account.getActiveCard());
+    }
 }

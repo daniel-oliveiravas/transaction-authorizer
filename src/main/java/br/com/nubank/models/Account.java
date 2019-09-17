@@ -27,10 +27,6 @@ public class Account extends Operation {
         return activeCard;
     }
 
-    public void setAvailableLimit(Integer availableLimit) {
-        this.availableLimit = availableLimit;
-    }
-
     @Override
     public OperationType getOperationType() {
         return OperationType.ACCOUNT_CREATION;
