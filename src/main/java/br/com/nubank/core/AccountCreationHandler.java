@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AccountCreationHandler implements OperationHandler {
+import static br.com.nubank.enums.Violations.ACCOUNT_ALREADY_INITIALIZED;
 
-    private static final String ACCOUNT_ALREADY_INITIALIZED_VALIDATION = "account-already-initialized";
+public class AccountCreationHandler implements OperationHandler {
 
     private AccountHolder accountHolder;
 
@@ -26,7 +26,7 @@ public class AccountCreationHandler implements OperationHandler {
             accountHolder.setAccount(account);
             violations = Collections.emptyList();
         } else {
-            violations = Collections.singletonList(ACCOUNT_ALREADY_INITIALIZED_VALIDATION);
+            violations = Collections.singletonList(ACCOUNT_ALREADY_INITIALIZED.getCode());
         }
 
         return new TransactionResult(this.accountHolder.getAccount(), violations);

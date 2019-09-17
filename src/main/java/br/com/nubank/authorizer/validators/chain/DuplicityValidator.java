@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static br.com.nubank.enums.Violations.DUPLICATED_TRANSACTION;
+
 public class DuplicityValidator extends BaseValidator {
 
-    private static final String DUPLICITY_VIOLATION = "doubled-transaction";
     private static final long FREQUENCY_MINUTES_RANGE = 2;
     private static final int MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS = 0;
 
@@ -24,7 +25,7 @@ public class DuplicityValidator extends BaseValidator {
                     transaction.getAmount(), transaction.getTime());
 
             if (doubledTransactionsCount > MAXIMUM_ALLOWED_DOUBLED_TRANSACTIONS) {
-                violations.add(DUPLICITY_VIOLATION);
+                violations.add(DUPLICATED_TRANSACTION.getCode());
             }
         }
 

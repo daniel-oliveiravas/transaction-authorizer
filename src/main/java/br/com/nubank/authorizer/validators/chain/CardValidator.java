@@ -5,14 +5,14 @@ import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
-public class CardValidator extends BaseValidator {
+import static br.com.nubank.enums.Violations.INACTIVE_CARD;
 
-    private static final String CARD_VIOLATION = "card-not-active";
+public class CardValidator extends BaseValidator {
 
     @Override
     public void handle(Account account, Transaction transaction, List<Transaction> history, List<String> violations) {
         if (account.getActiveCard().equals(Boolean.FALSE)) {
-            violations.add(CARD_VIOLATION);
+            violations.add(INACTIVE_CARD.getCode());
         }
 
         super.handle(account, transaction, history, violations);

@@ -6,9 +6,10 @@ import br.com.nubank.models.Transaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static br.com.nubank.enums.Violations.HIGH_FREQUENCY;
+
 public class FrequencyValidator extends BaseValidator {
 
-    private static final String HIGH_FREQUENCY_VIOLATION = "high-frequency-small-interval";
     private static final int FREQUENCY_MINUTES_RANGE = 2;
     private static final int MAXIMUM_TRANSACTIONS_ALLOWED = 3;
     private static final int CURRENT_TRANSACTION_COUNT = 1;
@@ -21,7 +22,7 @@ public class FrequencyValidator extends BaseValidator {
         long transactionsInLastTwoMinutesFromHistory = getLastTwoMinutesTransactionsCount(history, start, end);
 
         if (transactionsInLastTwoMinutesFromHistory + CURRENT_TRANSACTION_COUNT > MAXIMUM_TRANSACTIONS_ALLOWED) {
-            violations.add(HIGH_FREQUENCY_VIOLATION);
+            violations.add(HIGH_FREQUENCY.getCode());
         }
 
         super.handle(account, transaction, history, violations);

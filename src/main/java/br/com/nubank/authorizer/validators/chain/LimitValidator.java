@@ -5,14 +5,14 @@ import br.com.nubank.models.Transaction;
 
 import java.util.List;
 
-public class LimitValidator extends BaseValidator {
+import static br.com.nubank.enums.Violations.INSUFFICIENT_LIMIT;
 
-    private static final String INSUFFICIENT_LIMIT_VIOLATION = "insufficient-limit";
+public class LimitValidator extends BaseValidator {
 
     @Override
     public void handle(Account account, Transaction transaction, List<Transaction> history, List<String> violations) {
         if (account.getAvailableLimit() < transaction.getAmount()) {
-            violations.add(INSUFFICIENT_LIMIT_VIOLATION);
+            violations.add(INSUFFICIENT_LIMIT.getCode());
         }
         super.handle(account, transaction, history, violations);
     }
