@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import static br.com.nubank.enums.Violations.INACTIVE_CARD;
+import static br.com.nubank.enums.Violations.INSUFFICIENT_LIMIT;
+
 public class BasicValidatorsChainIT {
 
     @Test
@@ -17,8 +20,8 @@ public class BasicValidatorsChainIT {
 
         List<String> violations = validatorsChain.validate(createAccountWithInactiveCard(100), createSimpleTransaction(200), Collections.emptyList());
 
-        Assert.assertTrue(violations.contains("card-not-active"));
-        Assert.assertTrue(violations.contains("insufficient-limit"));
+        Assert.assertTrue(violations.contains(INACTIVE_CARD.getCode()));
+        Assert.assertTrue(violations.contains(INSUFFICIENT_LIMIT.getCode()));
     }
 
     private Account createAccountWithInactiveCard(Integer availableLimit) {
